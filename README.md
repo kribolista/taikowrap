@@ -13,8 +13,8 @@ Alat ini digunakan untuk melakukan deposit dan withdraw Ether menggunakan kontra
 1. Clone repositori ini:
 
    ```bash
-   git clone https://github.com/username/repo.git
-   cd repo
+   git clone https://github.com/kribolista/taikowrap.git
+   cd taikowrap
 
 2. Instal dependensi yang diperlukan:
 
