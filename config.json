@@ -1,5 +1,5 @@
 {
   "gasPrice": "0.09",
-  "iterations": 70,
-  "interval": 30
+  "iterations": 45,
+  "interval": 60
 }
