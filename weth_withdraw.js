@@ -40,7 +40,7 @@ async function withdraw() {
   
   // Pastikan ada saldo yang bisa ditarik
   if (amount.isZero()) {
-    console.log("No balance to withdraw");
+    console.log("No balance available for withdrawal.");
     return;
   }
 
@@ -48,7 +48,7 @@ async function withdraw() {
     // Kirim transaksi withdraw
     const tx = await contract.withdraw(amount, {
       gasPrice: ethers.utils.parseUnits(config.gasPrice, "gwei"), // Gas price dari config
-      gasLimit: 104817, // Batas gas
+      gasLimit: 100000, // Batas gas
     });
 
     // Cetak hash transaksi
