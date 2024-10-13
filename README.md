@@ -4,7 +4,7 @@
 Tools ini digunakan untuk melakukan deposit dan withdraw secara otomatis pada kontrak WETH di jaringan Ethereum.
 
 ## Struktur Proyek
-- `weth.js`: File utama yang menjalankan deposit dan withdraw secara paralel untuk 100 wallet.
+- `weth.js`: File utama yang menjalankan deposit dan withdraw secara paralel.
 - `weth_deposit.js`: File yang menangani logika deposit WETH.
 - `weth_withdraw.js`: File yang menangani logika withdraw WETH.
 - `config.json`: File konfigurasi untuk gas price dan jumlah iterasi.
