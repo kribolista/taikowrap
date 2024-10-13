@@ -1,33 +1,38 @@
-# Ether Deposit & Withdraw Tool
+# Ethereum Wallet Automation Tool
 
-Alat ini digunakan untuk melakukan deposit dan withdraw Ether menggunakan kontrak WETH pada jaringan Ethereum. Alat ini memungkinkan Anda untuk berinteraksi dengan kontrak WETH melalui wallet yang telah Anda siapkan.
+## Deskripsi
+Tools ini digunakan untuk melakukan deposit dan withdraw secara otomatis pada kontrak WETH di jaringan Ethereum.
 
-## Prerequisites
+## Struktur Proyek
+- `weth.js`: File utama yang menjalankan deposit dan withdraw secara paralel untuk 100 wallet.
+- `weth_deposit.js`: File yang menangani logika deposit WETH.
+- `weth_withdraw.js`: File yang menangani logika withdraw WETH.
+- `config.json`: File konfigurasi untuk gas price dan jumlah iterasi.
+- `package.json`: File konfigurasi untuk dependensi Node.js.
+- `abi.json`: File yang berisi ABI dari kontrak WETH.
 
-- Node.js (versi 14 atau lebih baru)
-- npm (versi 6 atau lebih baru)
-- File .env dengan private keys dan wallet addresses
+## Persyaratan
+- Node.js dan npm harus terinstal pada sistem Anda.
+- File `.env` harus berisi private keys dan alamat wallet.
 
-## Instalasi
+## Cara Menggunakan
+1. **Instalasi**:
+   - Jalankan `npm install` untuk menginstal dependensi.
 
-1. Clone repositori ini:
+2. **Konfigurasi**:
+   - Buat file `.env` dan isi dengan private keys dan alamat wallet:
+     ```
+     PRIVATE_KEYS1=your_private_key_1
+     WALLET1=your_wallet_address_1
+     ...
+     ```
 
-   ```bash
-   git clone https://github.com/kribolista/taikowrap.git
-   cd taikowrap
+3. **Menjalankan Tools**:
+   - Jalankan `node weth.js` untuk memulai proses deposit dan withdraw.
 
-2. Instal dependensi yang diperlukan:
+4. **Pengaturan**:
+   - Ubah pengaturan di `config.json` jika diperlukan, seperti gas price dan jumlah iterasi.
 
-   ```bash
-   npm install
-
-3. Buat file .env di root proyek dan tambahkan private keys serta wallet addresses Anda:
-
-   ```bash
-   PRIVATE_KEYS1=your_private_key_1
-   WALLET1=your_wallet_address_1
-   ...
-Ulangi untuk setiap wallet hingga 20 wallet.
-
-4. Sesuaikan file config.json jika diperlukan, terutama untuk gasPrice, iterations, dan interval.
-
+## Catatan
+- Pastikan Anda memiliki cukup saldo pada setiap wallet untuk melakukan transaksi.
+- Transaksi blockchain tidak dapat dipastikan waktunya, jadi berikan jeda waktu yang cukup antara setiap transaksi.
