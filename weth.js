@@ -72,8 +72,34 @@ async function runCommand(command, privateKey, wallet) {
   }
 }
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+// Fungsi untuk menjalankan transaksi deposit dan withdraw
+async function processWallet(j) {
+  const privateKey = privateKeys[j];
+  const wallet = wallets[j];
+
+  console.log(`Wallet ${j + 1}: deposit dimulai..`);
+  const depositResult = await runCommand("node weth_deposit.js", privateKey, wallet);
+  console.log(depositResult.output);
+  
+  if (depositResult.retval === 0) {
+    console.log(`Wallet ${j + 1}: deposit sukses`);
+    console.log(`Wallet ${j + 1}: tx hash: ${depositResult.output}`);
+    
+    console.log(`Wallet ${j + 1}: withdraw dimulai...`);
+    const withdrawResult = await runCommand("node weth_withdraw.js", privateKey, wallet);
+    console.log(withdrawResult.output);
+    
+    if (withdrawResult.retval === 0) {
+      console.log(`Wallet ${j + 1}: withdraw sukses`);
+      console.log(`Wallet ${j + 1}: tx hash: ${withdrawResult.output}`);
+    } else {
+      console.log(`Wallet ${j + 1}: withdraw gagal`);
+      failureLog[j] += 1;
+    }
+  } else {
+    console.log(`Wallet ${j + 1}: deposit gagal`);
+    failureLog[j] += 1;
+  }
 }
 
 // Fungsi utama
@@ -82,38 +108,9 @@ async function main() {
 
   for (let i = 0; i < totalIterations; i++) {
     console.log(`===========\nIterasi ${i + 1}`);
-    
-    for (let j = 0; j < privateKeys.length; j++) {
-      const privateKey = privateKeys[j];
-      const wallet = wallets[j];
-      
-      console.log(`Wallet ${j + 1}: deposit dimulai..`);
-      const depositResult = await runCommand("node weth_deposit.js", privateKey, wallet);
-      console.log(depositResult.output);
-      
-      if (depositResult.retval === 0) {
-        console.log(`Wallet ${j + 1}: deposit sukses`);
-        console.log(`Wallet ${j + 1}: tx hash: ${depositResult.output}`);
-        
-        // Tunggu sejenak sebelum melakukan withdraw
-        await sleep(3000); // Tunggu 3 detik
 
-        console.log(`Wallet ${j + 1}: withdraw dimulai...`);
-        const withdrawResult = await runCommand("node weth_withdraw.js", privateKey, wallet);
-        console.log(withdrawResult.output);
-
-        if (withdrawResult.retval === 0) {
-          console.log(`Wallet ${j + 1}: withdraw sukses`);
-          console.log(`Wallet ${j + 1}: tx hash: ${withdrawResult.output}`);
-        } else {
-          console.log(`Wallet ${j + 1}: withdraw gagal`);
-          failureLog[j] += 1;
-        }
-      } else {
-        console.log(`Wallet ${j + 1}: deposit gagal`);
-        failureLog[j] += 1;
-      }
-    }
+    // Jalankan deposit dan withdraw untuk semua wallet secara paralel
+    await Promise.all(wallets.map((_, j) => processWallet(j)));
   }
 
   console.log("\n=== Ringkasan Iterasi ===");
