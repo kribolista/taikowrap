@@ -35,7 +35,7 @@ function getRandomAmount(min, max) {
 // Fungsi deposit WETH
 async function deposit() {
   // Menghasilkan jumlah deposit acak dalam rentang yang ditentukan
-  const randomAmount = getRandomAmount(0.0001, 0.0003); // Ubah rentang sesuai kebutuhan
+  const randomAmount = getRandomAmount(0.399, 0.401); // Ubah rentang sesuai kebutuhan
   const amount = ethers.utils.parseEther(randomAmount); // Konversi jumlah deposit ke satuan ether
 
   try {
