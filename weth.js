@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { exec } = require("child_process");
 const util = require("util");
+const cron = require('node-cron');
 
 const execPromise = util.promisify(exec);
 
@@ -51,10 +52,7 @@ const wallets = [
   process.env.WALLET20,
 ];
 
-// Inisialisasi log sukses dan gagal untuk tiap wallet
-const successLog = Array(wallets.length).fill(0);
-const failureLog = Array(wallets.length).fill(0);
-
+// Fungsi untuk menjalankan perintah
 async function runCommand(command, privateKey, wallet) {
   try {
     const { stdout, stderr } = await execPromise(`PRIVATE_KEY=${privateKey.trim()} WALLET=${wallet.trim()} ${command}`);
@@ -122,5 +120,29 @@ async function main() {
   console.log("Semua iterasi selesai.");
 }
 
-// Jalankan fungsi utama
-main().catch(console.error);
+// Fungsi untuk cek waktu dan jalankan main
+function checkAndRun() {
+  const now = new Date();
+  const currentHour = now.getUTCHours();
+  const currentMinute = now.getUTCMinutes();
+
+  // Konversi waktu WIB ke UTC (WIB = UTC + 7)
+  const targetHour = 0; // 07:10 WIB adalah 00:10 UTC
+  const targetMinute = 10;
+
+  if (currentHour > targetHour || (currentHour === targetHour && currentMinute >= targetMinute)) {
+    console.log("Waktu telah melewati jadwal, menjalankan skrip sekarang...");
+    main();
+  } else {
+    console.log("Menunggu jadwal selanjutnya pada jam 07:10 WIB...");
+  }
+}
+
+// Jadwalkan agar skrip berjalan setiap hari jam 07:10 WIB
+cron.schedule('10 0 * * *', () => {
+  console.log('Jadwal harian 07:10 WIB, menjalankan skrip...');
+  main();
+});
+
+// Cek apakah skrip dijalankan pada jam yang sudah lewat
+checkAndRun();
