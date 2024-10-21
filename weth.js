@@ -17,16 +17,6 @@ const privateKeys = [
   process.env.PRIVATE_KEYS8,
   process.env.PRIVATE_KEYS9,
   process.env.PRIVATE_KEYS10,
-  process.env.PRIVATE_KEYS11,
-  process.env.PRIVATE_KEYS12,
-  process.env.PRIVATE_KEYS13,
-  process.env.PRIVATE_KEYS14,
-  process.env.PRIVATE_KEYS15,
-  process.env.PRIVATE_KEYS16,
-  process.env.PRIVATE_KEYS17,
-  process.env.PRIVATE_KEYS18,
-  process.env.PRIVATE_KEYS19,
-  process.env.PRIVATE_KEYS20,
 ];
 
 const wallets = [
@@ -40,16 +30,6 @@ const wallets = [
   process.env.WALLET8,
   process.env.WALLET9,
   process.env.WALLET10,
-  process.env.WALLET11,
-  process.env.WALLET12,
-  process.env.WALLET13,
-  process.env.WALLET14,
-  process.env.WALLET15,
-  process.env.WALLET16,
-  process.env.WALLET17,
-  process.env.WALLET18,
-  process.env.WALLET19,
-  process.env.WALLET20,
 ];
 
 // Fungsi untuk menjalankan perintah
